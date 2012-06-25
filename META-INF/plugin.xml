@@ -1,0 +1,30 @@
+<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
+<idea-plugin url="http://intellimars.googlecode.com">
+  <name>Winstone Integration Plugin(CE)</name>
+  <description>Integrates with Winstone AP Server</description>
+  <version>1.2</version>
+  <vendor logo="/com/googlecode/intellimars/winstone/small-icon.gif"
+          url="http://d.hatena.ne.jp/masanobuimai">masanobu imai
+  </vendor>
+  <idea-version since-build="IC-93.13" />
+  <change-notes><![CDATA[
+ver1.2<br>
+ - IDEA9 support (Ultimate, Community Edition integreated)<br>
+ - <code>webappsDir</code> option support<br>
+ver1.11<br>
+ - IDEA9 Community Edition support<br>
+ver1.10<br>
+ - IDEA8 support<br>
+ - Winstone 0.9.10 is bundled(use CDDL-License).<br>
+ - ApplicationComponent was deleted.<br>
+ver1.04<br>
+ - The default value of CommonLibs is moved from 'config/plugins/winstone-plugin/' to 'system/plugins/winstone-plugin/'.<br>
+ - Add a 'set working-directory' option.<br>
+ver1.03<br>
+ - Add an open-browser option.<br>
+]]></change-notes>
+  <!--<depends>JUnit</depends>-->
+  <extensions defaultExtensionNs="com.intellij">
+    <configurationType implementation="com.googlecode.intellimars.winstone.WinstoneConfigurationType" />
+  </extensions>
+</idea-plugin>
