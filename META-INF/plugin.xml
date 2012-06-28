@@ -6,8 +6,10 @@
   <vendor logo="/com/googlecode/intellimars/winstone/small-icon.gif"
           url="http://d.hatena.ne.jp/masanobuimai">masanobu imai
   </vendor>
-  <idea-version since-build="IC-93.13" />
+  <idea-version since-build="IC-110.3" />
   <change-notes><![CDATA[
+ver1.3<br>
+ - IDEA11 support (Ultimate, Community Edition integreated)<br>
 ver1.2<br>
  - IDEA9 support (Ultimate, Community Edition integreated)<br>
  - <code>webappsDir</code> option support<br>

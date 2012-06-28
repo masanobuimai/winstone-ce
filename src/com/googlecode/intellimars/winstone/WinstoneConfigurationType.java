@@ -8,25 +8,22 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.IconLoader;
 import com.intellij.util.containers.ContainerUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 
 public class WinstoneConfigurationType implements ConfigurationType {
     private static final Icon ICON = IconLoader.getIcon("/com/googlecode/intellimars/winstone/small-icon.gif");
+    private final ConfigurationFactory myFactory;
 
-    private final ConfigurationFactory myFactory = new ConfigurationFactory(this) {
-        public RunConfiguration createTemplateConfiguration(Project project) {
-            return new WinstoneConfiguration("", project, WinstoneConfigurationType.this);
-        }
-    };
 
-    public static WinstoneConfigurationType getInstance() {
-        return ContainerUtil.findInstance(Extensions.getExtensions(CONFIGURATION_TYPE_EP),
-                WinstoneConfigurationType.class);
+    public WinstoneConfigurationType() {
+        myFactory = new ConfigurationFactory(this) {
+            public RunConfiguration createTemplateConfiguration(Project project) {
+                return new WinstoneConfiguration("", project, WinstoneConfigurationType.this);
+            }
+        };
     }
-
-
-    public WinstoneConfigurationType() { }
 
 
     public String getDisplayName() {
@@ -47,6 +44,11 @@ public class WinstoneConfigurationType implements ConfigurationType {
 
     public ConfigurationFactory[] getConfigurationFactories() {
         return new ConfigurationFactory[] { myFactory };
+    }
+
+    @Nullable
+    public static WinstoneConfigurationType getInstance() {
+        return ContainerUtil.findInstance(Extensions.getExtensions(CONFIGURATION_TYPE_EP), WinstoneConfigurationType.class);
     }
 }
 

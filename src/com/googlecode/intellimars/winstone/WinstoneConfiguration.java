@@ -2,12 +2,12 @@ package com.googlecode.intellimars.winstone;
 
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
-import com.intellij.execution.RunConfigurationExtension;
-import com.intellij.execution.RunJavaConfiguration;
+import com.intellij.execution.JavaRunConfigurationExtensionManager;
 import com.intellij.execution.configurations.JavaRunConfigurationModule;
 import com.intellij.execution.configurations.ModuleBasedConfiguration;
 import com.intellij.execution.configurations.RunProfileState;
 import com.intellij.execution.configurations.RuntimeConfigurationException;
+import com.intellij.execution.filters.TextConsoleBuilderFactory;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.Module;
@@ -25,7 +25,7 @@ import java.util.Collection;
 import java.util.ResourceBundle;
 
 
-public class WinstoneConfiguration extends ModuleBasedConfiguration<JavaRunConfigurationModule> implements RunJavaConfiguration {
+public class WinstoneConfiguration extends ModuleBasedConfiguration<JavaRunConfigurationModule> {
     @NonNls
     private static ResourceBundle ourBundle = ResourceBundle.getBundle("com.googlecode.intellimars.winstone.message");
     private static final Logger LOGGER = Logger.getInstance("Winstone");
@@ -54,8 +54,8 @@ public class WinstoneConfiguration extends ModuleBasedConfiguration<JavaRunConfi
     public String TOOLS_JAR;
 
 
-    public WinstoneConfiguration(String s, Project project, WinstoneConfigurationType type) {
-        super(s, new JavaRunConfigurationModule(project, false), type.getConfigurationFactories()[0]);
+    public WinstoneConfiguration(String name, Project project, WinstoneConfigurationType configurationType) {
+        super(name, new JavaRunConfigurationModule(project, false), configurationType.getConfigurationFactories()[0]);
     }
 
     public Collection<Module> getValidModules() {
@@ -69,13 +69,14 @@ public class WinstoneConfiguration extends ModuleBasedConfiguration<JavaRunConfi
     public SettingsEditor<WinstoneConfiguration> getConfigurationEditor() {
         SettingsEditorGroup<WinstoneConfiguration> group = new SettingsEditorGroup<WinstoneConfiguration>();
         group.addEditor("Configuration", new WinstoneConfigurationEditor(getProject()));
-        RunConfigurationExtension.appendEditors(this, group);
+        JavaRunConfigurationExtensionManager.getInstance().appendEditors(this, group);
         return group;
     }
 
-    public RunProfileState getState(
-            @NotNull Executor executor, @NotNull ExecutionEnvironment env) throws ExecutionException {
-        return new WinstoneRunnableState(env, this);
+    public RunProfileState getState(@NotNull Executor executor, @NotNull ExecutionEnvironment env) throws ExecutionException {
+        WinstoneRunnableState state = new WinstoneRunnableState(env, this);
+        state.setConsoleBuilder(TextConsoleBuilderFactory.getInstance().createBuilder(getProject()));
+        return state;
     }
 
     public void checkConfiguration() throws RuntimeConfigurationException {
@@ -105,36 +106,5 @@ public class WinstoneConfiguration extends ModuleBasedConfiguration<JavaRunConfi
         super.writeExternal(element);
         writeModule(element);
         DefaultJDOMExternalizer.writeExternal(this, element);
-    }
-
-    public void setProperty(int i, String s) {
-    }
-
-    public String getProperty(int i) {
-        return null;
-    }
-
-    public boolean isAlternativeJrePathEnabled() {
-        return ALTERNATIVE_JRE_PATH_ENABLED;
-    }
-
-    public void setAlternativeJrePathEnabled(boolean enabled) {
-        ALTERNATIVE_JRE_PATH_ENABLED = enabled;
-    }
-
-    public String getAlternativeJrePath() {
-        return ALTERNATIVE_JRE_PATH;
-    }
-
-    public void setAlternativeJrePath(String path) {
-        ALTERNATIVE_JRE_PATH = path;
-    }
-
-    public String getRunClass() {
-        return "winstone.Launcher";
-    }
-
-    public String getPackage() {
-        return null;
     }
 }

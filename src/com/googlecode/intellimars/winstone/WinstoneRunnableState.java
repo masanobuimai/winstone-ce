@@ -5,6 +5,7 @@ import com.intellij.execution.DefaultExecutionResult;
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.ExecutionResult;
 import com.intellij.execution.Executor;
+import com.intellij.execution.JavaRunConfigurationExtensionManager;
 import com.intellij.execution.RunConfigurationExtension;
 import com.intellij.execution.configurations.DebuggingRunnerData;
 import com.intellij.execution.configurations.JavaCommandLineState;
@@ -163,11 +164,7 @@ public class WinstoneRunnableState extends JavaCommandLineState {
 
     protected OSProcessHandler startProcess() throws ExecutionException {
         OSProcessHandler osprocesshandler = super.startProcess();
-        RunConfigurationExtension extensions[] = Extensions.getExtensions(RunConfigurationExtension.EP_NAME);
-        for (RunConfigurationExtension extension : extensions) {
-            extension.handleStartProcess(config, osprocesshandler);
-        }
-
+        JavaRunConfigurationExtensionManager.getInstance().attachExtensionsToProcess(config, osprocesshandler, runnerSettings);
         return osprocesshandler;
     }
 
