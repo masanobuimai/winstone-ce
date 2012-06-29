@@ -1,8 +1,8 @@
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
-<idea-plugin url="http://intellimars.googlecode.com">
+<idea-plugin url="https://github.com/masanobuimai/winstone-ce">
   <name>Winstone Integration Plugin(CE)</name>
   <description>Integrates with Winstone AP Server</description>
-  <version>1.2</version>
+  <version>1.3</version>
   <vendor logo="/com/googlecode/intellimars/winstone/small-icon.gif"
           url="http://d.hatena.ne.jp/masanobuimai">masanobu imai
   </vendor>
